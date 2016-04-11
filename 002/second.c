@@ -1,35 +1,39 @@
 #include <stdio.h>
 
-#define check_usage(A, M, ...) if(!(A)) { printf(M "\n", ##__VA_ARGS__); goto error; }
+#define CHECK_E_USER(A, M, ...) if(!(A)) { printf(M "\n", ##__VA_ARGS__); goto error; }
 
 int main(int argc, char *argv[])
 {
     unsigned long first, second, third, sumOfAllEven;
-    unsigned int max;
+    long limit;
 
-    check_usage(argc == 2, "Usage: %s <max>", argv[0]);
+    CHECK_E_USER(argc == 2, "ERROR: Missing args");
 
-    max = atoi(argv[1]);
+    limit = atol(argv[1]);
 
-    check_usage(max > 1, "Max has to be above 1");
+    CHECK_E_USER(limit > 1, "ERROR: <limit> has to be above 1");
 
     first           = 1;
     second          = 1;
     third           = 0;
     sumOfAllEven    = 0;
 
-    while (third < max) {
+    while (third < limit) {
         sumOfAllEven   += third;
         first           = second + third;
         second          = third + first;
         third           = first + second;
     }
 
-    printf("The sum of all even fibonacci terms below %d is:\n", max);
-    printf("%ld\n", sumOfAllEven);
+    printf("The sum of all even fibonacci terms below %ld is:\n", limit);
+    printf("%lu\n", sumOfAllEven);
 
     return 0;
 
     error:
+
+    printf("Calculates the sum of all even fibonacci terms below <limit>.\n");
+    printf("Usage: %s <limit>\n", argv[0]);
+
     return 255;
 }

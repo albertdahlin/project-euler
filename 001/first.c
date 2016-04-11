@@ -1,31 +1,34 @@
 #include <stdio.h>
 
-#define check_usage(A, M, ...) if(!(A)) { printf(M "\n", ##__VA_ARGS__); goto error; }
+#define CHECK_E_USER(A, M, ...) if(!(A)) { printf(M "\n", ##__VA_ARGS__); goto error; }
 
 int main(int argc, char *argv[])
 {
-    unsigned int end, i;
-    long unsigned int result;
+    long limit;
+    unsigned long result, i;
 
-    check_usage(argc >= 2, "Usage: %s <end>", argv[0]);
+    CHECK_E_USER(argc >= 2, "ERROR: missing args.");
 
-    end = atoi(argv[1]);
+    limit = atol(argv[1]);
 
-    check_usage(end > 0, "End has to be bigger than zero");
+    CHECK_E_USER(limit > 0, "ERROR: <limit> has to be above than zero");
 
     result = 0;
 
-    for (i = 0; i < end; i++) {
+    for (i = 0; i < limit; i++) {
         if ((i % 3 == 0) || (i % 5 == 0)) {
             result += i;
         }
     }
 
-    printf("The sum of all the multiples of 3 or 5 below %d is:\n", end);
-    printf("Sum: %ld\n", result);
+    printf("The sum of all the multiples of 3 or 5 below %ld is:\n", limit);
+    printf("Sum: %lu\n", result);
 
     return 0;
     error:
+
+    printf("Calculates the sum of all numbers below a limit that are multiples of 3 or 5.\n");
+    printf("Usage: %s <limit>\n", argv[0]);
 
     return 255;
 }
