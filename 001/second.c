@@ -1,10 +1,11 @@
 #include <stdio.h>
+#include <inttypes.h>
 
 #define CHECK_E_USER(A, M, ...) if(!(A)) { printf(M "\n", ##__VA_ARGS__); goto error; }
 
-unsigned long getSumUpTo(unsigned int max)
+uint64_t getSumUpTo(uint32_t max)
 {
-    unsigned long sum, multiplier, remider;
+    uint64_t sum, multiplier, remider;
 
     multiplier  = max / 2;
     remider     = max % 2;
@@ -17,8 +18,8 @@ unsigned long getSumUpTo(unsigned int max)
 
 int main(int argc, char *argv[])
 {
-    long limit;
-    unsigned long result;
+    int_fast32_t limit;
+    uint64_t result;
 
     CHECK_E_USER(argc >= 2, "ERROR: missing args.");
 
@@ -33,8 +34,8 @@ int main(int argc, char *argv[])
     result += 5 * getSumUpTo(limit / 5);
     result -= 15 * getSumUpTo(limit / 15);
 
-    printf("The sum of all the multiples of 3 or 5 below %ld is:\n", limit + 1);
-    printf("Sum: %lu\n", result);
+    printf("The sum of all the multiples of 3 or 5 below %" PRIiFAST32 " is:\n", limit + 1);
+    printf("Sum: %" PRIu64 "\n", result);
 
     return 0;
 

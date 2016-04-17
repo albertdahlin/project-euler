@@ -1,11 +1,12 @@
 #include <stdio.h>
+#include <inttypes.h>
 
 #define CHECK_E_USER(A, M, ...) if(!(A)) { printf(M "\n", ##__VA_ARGS__); goto error; }
 
 int main(int argc, char *argv[])
 {
-    long limit;
-    unsigned long result, i;
+    int_fast32_t limit;
+    uint64_t result, i;
 
     CHECK_E_USER(argc >= 2, "ERROR: missing args.");
 
@@ -21,8 +22,8 @@ int main(int argc, char *argv[])
         }
     }
 
-    printf("The sum of all the multiples of 3 or 5 below %ld is:\n", limit);
-    printf("Sum: %lu\n", result);
+    printf("The sum of all the multiples of 3 or 5 below %" PRIiFAST32 " is:\n", limit);
+    printf("Sum: %" PRIu64 "\n", result);
 
     return 0;
     error:

@@ -1,15 +1,16 @@
 #include <stdio.h>
+#include <inttypes.h>
 
 #define CHECK_E_USER(A, M, ...) if(!(A)) { printf(M "\n", ##__VA_ARGS__); goto error; }
 
 int main(int argc, char *argv[])
 {
-    unsigned long previous, last, fibonacci, sumOfAllEven;
-    long limit;
+    uint64_t previous, last, fibonacci, sumOfAllEven;
+    uint_fast32_t limit;
 
     CHECK_E_USER(argc == 2, "ERROR: Missing args");
 
-    limit = atol(argv[1]);
+    limit = strtoul(argv[1], NULL, 10);
 
     CHECK_E_USER(limit > 1, "ERROR: <limit> has to be above 1");
 
@@ -28,8 +29,8 @@ int main(int argc, char *argv[])
         previous    = fibonacci;
     }
 
-    printf("The sum of all even fibonacci terms below %ld is:\n", limit);
-    printf("%lu\n", sumOfAllEven);
+    printf("The sum of all even fibonacci terms below %" PRIuFAST32 " is:\n", limit);
+    printf("%" PRIu64 "\n", sumOfAllEven);
 
     return 0;
 
