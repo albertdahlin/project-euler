@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <inttypes.h>
 #include <math.h>
 
 #define CHECK_E_USER(A, M, ...) if(!(A)) { printf(M "\n", ##__VA_ARGS__); goto error; }
 
-unsigned long getRidOfFactor(unsigned long input, unsigned long factor)
+uint64_t getRidOfFactor(uint64_t input, uint64_t factor)
 {
     if (input % factor == 0) {
-        printf("%lu\n", factor);
+        printf("%" PRIu64 "\n", factor);
         while (input % factor == 0) {
             input /= factor;
         }
@@ -18,19 +19,19 @@ unsigned long getRidOfFactor(unsigned long input, unsigned long factor)
 
 int main(int argc, char *argv[])
 {
-    unsigned long input, factor, limit;
+    uint64_t input, factor, limit;
     CHECK_E_USER(argc == 2, "ERROR: missing args.");
 
-    input = strtoul(argv[1], NULL, 10);
+    input = strtoull(argv[1], NULL, 10);
 
     CHECK_E_USER(input > 1, "<number> needs to be above 1");
 
-    printf("Prime factors of %lu are:\n", input);
+    printf("Prime factors of %" PRIu64 " are:\n", input);
 
     factor  = 2;
     input   = getRidOfFactor(input, factor);
 
-    limit   = (unsigned long) sqrt(input);
+    limit   = (uint64_t) sqrt(input);
     factor  = 3;
 
     while (factor <= limit) {
@@ -41,7 +42,7 @@ int main(int argc, char *argv[])
     }
 
     if (input > 1) {
-        printf("%lu\n", input);
+        printf("%" PRIu64 "\n", input);
     }
 
     return 0;
