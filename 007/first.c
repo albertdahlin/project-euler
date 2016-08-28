@@ -1,6 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <inttypes.h>
 #include <math.h>
 
@@ -9,8 +7,15 @@ uint8_t isPrime(uint64_t number)
     uint64_t limit = ceil(sqrt(number));
     uint64_t i;
 
-    for (i = 3; i <= limit; i += 2) {
-        if (number % i == 0) {
+    if (number % 3 == 0) {
+        return 0;
+    }
+
+    for (i = 5; i <= limit; i += 6) {
+        if (
+            number % i == 0
+            || number % (i + 2) == 0
+        ) {
             return 0;
         }
     }
