@@ -4,17 +4,16 @@
 
 uint64_t getRidOfFactor(uint64_t number, uint64_t factor, uint64_t *factorCount)
 {
-    uint64_t before;
+    uint_fast32_t exponent = 1;
 
     number /= factor;
-    before = *factorCount;
-    *factorCount *= 2;
 
     while (number % factor == 0) {
-        // Get rid of duplicate factors.
-        *factorCount += before;
+        // Count the number of times this factor appears.
+        exponent += 1;
         number /= factor;
     }
+    *factorCount *= exponent + 1;
 
     return number;
 }
